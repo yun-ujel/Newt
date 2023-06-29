@@ -6,6 +6,7 @@ using Grids;
 namespace Newt
 {
     using GridObjects;
+    using RoomGeneration.Utilities;
 
     public class GridTest : MonoBehaviour
     {
@@ -13,6 +14,10 @@ namespace Newt
 
         [SerializeField] private Transform gridParentTransform;
         [SerializeField] private GameObject gridObjectPrefab;
+
+        [Space]
+
+        [SerializeField] private Texture2D texture;
 
         private void Start()
         {
@@ -25,6 +30,8 @@ namespace Newt
             GridObject.GridParentTransform = gridParentTransform;
 
             grid = new Grid<GridObject>(32, 32, 1, Vector2.one * -16, GridObject.create);
+
+            grid.GenerateRoom(texture);
         }
     }
 }

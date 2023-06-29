@@ -20,6 +20,7 @@ namespace Newt.GridObjects
         public static Transform GridParentTransform { get; set; }
 
         private GameObject gameObject;
+        private SpriteRenderer spriteRenderer;
 
         public GridObject(Grid<GridObject> grid, int x, int y)
         {
@@ -32,7 +33,14 @@ namespace Newt.GridObjects
             {
                 gameObject = Object.Instantiate(GridObjectPrefab, grid.GridToWorldPosition(x, y, false), Quaternion.identity, GridParentTransform);
                 gameObject.name = $"( {x}, {y} )";
+
+                spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             }
+        }
+
+        public void SetColor(Color color)
+        {
+            spriteRenderer.color = color;
         }
     }
 }
