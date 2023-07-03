@@ -50,8 +50,10 @@ namespace Newt.GridObjects
             }
         }
 
-        public void SetColor(Color color)
+        public void UpdateVisual(Color color, Sprite sprite = null)
         {
+            if (sprite == null) { sprite = this.sprite; }
+            else { this.sprite = sprite; }
             OnUpdateVisualEvent?.Invoke(this, new OnUpdateVisualEventArgs(sprite, color));
         }
     }

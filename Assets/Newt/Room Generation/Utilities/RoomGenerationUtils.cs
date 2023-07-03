@@ -32,11 +32,11 @@ namespace Newt.RoomGeneration.Utilities
                 {
                     if (texture.GetPixel(x, y).a <= 0f)
                     {
-                        grid.GetObject(x, y).SetColor(Color.clear);
+                        grid.GetObject(x, y).UpdateVisual(Color.clear);
                     }
                     else
                     {
-                        grid.GetObject(x, y).SetColor(Color.black);
+                        grid.GetObject(x, y).UpdateVisual(Color.black);
                     }
                 }
             }
