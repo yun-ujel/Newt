@@ -12,6 +12,9 @@ namespace Newt.RoomGeneration.Tiles
 
         private SerializedProperty adjacentTilesProperty;
         private SerializedProperty tileSpriteProperty;
+        private SerializedProperty ignoreCornersProperty;
+
+        private Texture2D displayTexture;
 
         private GUIStyle fixedWidth;
 
@@ -21,21 +24,33 @@ namespace Newt.RoomGeneration.Tiles
 
             adjacentTilesProperty = serializedObject.FindProperty("adjacentTiles");
             tileSpriteProperty = serializedObject.FindProperty("tileSprite");
+            ignoreCornersProperty = serializedObject.FindProperty("ignoreCorners");
 
             fixedWidth = new GUIStyle
             {
                 fixedWidth = 1f
             };
+
+            UpdateDisplayTexture();
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            EditorGUILayout.ObjectField(tileSpriteProperty);
+            Object sprite = EditorGUILayout.ObjectField("Sprite", tileSpriteProperty.objectReferenceValue, typeof(Sprite), false);
             EditorGUILayout.Space();
 
+            if (sprite != tileSpriteProperty.objectReferenceValue)
+            {
+                tileSpriteProperty.objectReferenceValue = sprite;
+                UpdateDisplayTexture();
+            }
+
             DrawAdjacentTiles();
+
+            EditorGUILayout.Space();
+            ignoreCornersProperty.boolValue = EditorGUILayout.Toggle("Ignore Corners", ignoreCornersProperty.boolValue);
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -63,6 +78,17 @@ namespace Newt.RoomGeneration.Tiles
                 }
                 EditorGUILayout.EndHorizontal();
             }
+        }
+
+        private void UpdateDisplayTexture()
+        {
+            Sprite sprite = (Sprite)tileSpriteProperty.objectReferenceValue;
+            displayTexture = sprite.ConvertSpriteToTexture();
+        }
+
+        public override Texture2D RenderStaticPreview(string assetPath, Object[] subAssets, int width, int height)
+        {
+            return displayTexture;
         }
     }
 }

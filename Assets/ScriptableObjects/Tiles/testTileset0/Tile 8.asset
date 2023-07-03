@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35dea3839b7c1d5469953f032c5a758d, type: 3}
   m_Name: Tile 8
   m_EditorClassIdentifier: 
-  adjacentTiles: 0000000000000000
-  tileSprite: {fileID: 0}
+  adjacentTiles: 0001000000000100
+  ignoreCorners: 0
+  tileSprite: {fileID: -7576202694732115921, guid: 9ae6652f06a56f24a8d01a8e5971e544, type: 3}
