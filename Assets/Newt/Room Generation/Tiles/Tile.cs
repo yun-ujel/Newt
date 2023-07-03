@@ -29,7 +29,16 @@ namespace Newt.RoomGeneration.Tiles
                 {
                     return false;
                 }
-                return adjacents == adjacentTiles;
+
+                for (int i = 0; i < adjacents.Length; i++)
+                {
+                    if (adjacents[i] != adjacentTiles[i])
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
             else
             {
