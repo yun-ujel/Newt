@@ -9,7 +9,7 @@ namespace Newt.RoomGeneration.Tiles
     {
         [Tooltip("Set to true if there should be a tile in the space adjacent to this object. Starts at top left and ends at bottom right, skipping the center tile.")]
         [SerializeField] private bool[] adjacentTiles = new bool[8];
-        [SerializeField] private bool ignoreCorners;
+        [SerializeField] private bool[] ignoredTiles = new bool[8];
 
         [SerializeField] private Sprite tileSprite;
 
@@ -23,30 +23,25 @@ namespace Newt.RoomGeneration.Tiles
 
         public bool IsTileValid(bool[] adjacents)
         {
-            if (!ignoreCorners)
+            if (adjacents.Length != 8)
             {
-                if (adjacents.Length != 8)
+                return false;
+            }
+
+            for (int i = 0; i < adjacents.Length; i++)
+            {
+                if (ignoredTiles[i])
+                {
+                    continue;
+                }
+
+                if (adjacents[i] != adjacentTiles[i])
                 {
                     return false;
                 }
-
-                for (int i = 0; i < adjacents.Length; i++)
-                {
-                    if (adjacents[i] != adjacentTiles[i])
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
             }
-            else
-            {
-                return adjacents[1] == adjacentTiles[1]
-                    && adjacents[3] == adjacentTiles[3]
-                    && adjacents[4] == adjacentTiles[4]
-                    && adjacents[6] == adjacentTiles[6];
-            }
+
+            return true;
         }
 
         public bool IsTileValid(bool[] adjacents, out Sprite sprite)

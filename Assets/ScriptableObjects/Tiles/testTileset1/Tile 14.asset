@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Tile 14
   m_EditorClassIdentifier: 
   adjacentTiles: 0000000001000000
-  ignoreCorners: 1
+  ignoredTiles: 0100010000010001
   tileSprite: {fileID: 2422477904726435412, guid: 34c88fd9fb9a60f4fbc9e1bdd5cbeaa5, type: 3}

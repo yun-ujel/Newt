@@ -12,7 +12,7 @@ namespace Newt.RoomGeneration.Tiles
 
         private SerializedProperty adjacentTilesProperty;
         private SerializedProperty tileSpriteProperty;
-        private SerializedProperty ignoreCornersProperty;
+        private SerializedProperty ignoredTilesProperty;
 
         private Texture2D displayTexture;
 
@@ -24,7 +24,7 @@ namespace Newt.RoomGeneration.Tiles
 
             adjacentTilesProperty = serializedObject.FindProperty("adjacentTiles");
             tileSpriteProperty = serializedObject.FindProperty("tileSprite");
-            ignoreCornersProperty = serializedObject.FindProperty("ignoreCorners");
+            ignoredTilesProperty = serializedObject.FindProperty("ignoredTiles");
 
             fixedWidth = new GUIStyle
             {
@@ -48,9 +48,8 @@ namespace Newt.RoomGeneration.Tiles
             }
 
             DrawAdjacentTiles();
-
             EditorGUILayout.Space();
-            ignoreCornersProperty.boolValue = EditorGUILayout.Toggle("Ignore Corners", ignoreCornersProperty.boolValue);
+            DrawIgnoredTiles();
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -72,6 +71,31 @@ namespace Newt.RoomGeneration.Tiles
                         continue;
                     }
                     SerializedProperty property = adjacentTilesProperty.GetArrayElementAtIndex(i);
+                    property.boolValue = EditorGUILayout.Toggle(property.boolValue);
+
+                    i++;
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+
+        private void DrawIgnoredTiles()
+        {
+            EditorGUILayout.LabelField("Ignored Tiles", EditorStyles.boldLabel);
+
+            int i = 0;
+
+            for (int height = 0; height < 3; height++)
+            {
+                _ = EditorGUILayout.BeginHorizontal(fixedWidth);
+                for (int width = 0; width < 3; width++)
+                {
+                    if (width == 1 && height == 1)
+                    {
+                        _ = EditorGUILayout.Toggle(false);
+                        continue;
+                    }
+                    SerializedProperty property = ignoredTilesProperty.GetArrayElementAtIndex(i);
                     property.boolValue = EditorGUILayout.Toggle(property.boolValue);
 
                     i++;
