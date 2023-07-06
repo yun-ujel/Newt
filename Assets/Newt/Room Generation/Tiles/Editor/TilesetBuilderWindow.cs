@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System.IO;
 
 namespace Newt.RoomGeneration.Tiles
 {
@@ -10,7 +9,8 @@ namespace Newt.RoomGeneration.Tiles
     {
         private ScriptableObject target;
         private SerializedObject serializedObject;
-        
+
+        private SerializedProperty tilesetNameProperty;
         private SerializedProperty spritesProperty;
         private SerializedProperty fallbackSpriteProperty;
 
@@ -24,32 +24,46 @@ namespace Newt.RoomGeneration.Tiles
         {
             target = CreateInstance<TilesetBuilder>();
             serializedObject = new SerializedObject(target);
-            
+
+            tilesetNameProperty = serializedObject.FindProperty("tilesetName");
             spritesProperty = serializedObject.FindProperty("sprites");
             fallbackSpriteProperty = serializedObject.FindProperty("fallbackSprite");
         }
 
         private void OnGUI()
         {
-            _ = EditorGUILayout.PropertyField(spritesProperty, true);
-
-            fallbackSpriteProperty.objectReferenceValue = EditorGUILayout.ObjectField("Fallback Sprite", fallbackSpriteProperty.objectReferenceValue, typeof(Sprite), false);
+            DrawProperties();
 
             _ = serializedObject.ApplyModifiedProperties();
-
             if (GUILayout.Button("Build Tileset"))
             {
                 BuildTileset();
             }
         }
 
+        private void DrawProperties()
+        {
+            tilesetNameProperty.stringValue = EditorGUILayout.TextField("Name", tilesetNameProperty.stringValue);
+                EditorGUILayout.Space();
+            _ = EditorGUILayout.PropertyField(spritesProperty, true);
+                EditorGUILayout.Space();
+            fallbackSpriteProperty.objectReferenceValue = EditorGUILayout.ObjectField("Fallback Sprite", fallbackSpriteProperty.objectReferenceValue, typeof(Sprite), false);
+                EditorGUILayout.Space();
+        }
+
+        #region Save / Build Methods
         private void BuildTileset()
         {
-            Sprite fallbackSprite = (Sprite)fallbackSpriteProperty.objectReferenceValue;
-            string fallbackSpriteName = fallbackSprite.texture.name;
-            Debug.Log(fallbackSpriteName);
+            string name = tilesetNameProperty.stringValue;
 
-            string guid = AssetDatabase.CreateFolder("Assets/ScriptableObjects/Tiles", fallbackSpriteName);
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                EditorUtility.DisplayDialog("Invalid File Name", "Please ensure the file name you've entered is valid", "OK");
+                return;
+            }
+
+            CreateRootFolders();
+            _ = SaveUtility.TryCreateFolder("Assets/ScriptableObjects/Tiles", name, out string guid);
             string folder = AssetDatabase.GUIDToAssetPath(guid);
 
             Tile[] tiles = new Tile[spritesProperty.arraySize];
@@ -57,15 +71,24 @@ namespace Newt.RoomGeneration.Tiles
             for (int i = 0; i < spritesProperty.arraySize; i++)
             {
                 Sprite sprite = (Sprite)spritesProperty.GetArrayElementAtIndex(i).objectReferenceValue;
-                string fullPath = $"{folder}/{$"Tile {i}"}.asset";
+                string tilePath = $"{folder}/{$"Tile {i}"}.asset";
 
-                tiles[i] = BuildTile(sprite, fullPath);
+                tiles[i] = BuildTile(sprite, tilePath);
             }
+
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            string rulesetPath = $"{folder}/{fallbackSpriteName}.asset";
+            Sprite fallbackSprite = (Sprite)fallbackSpriteProperty.objectReferenceValue;
+
+            string rulesetPath = $"{folder}/{name}.asset";
             BuildRuleset(tiles, fallbackSprite, rulesetPath);
+        }
+
+        private void CreateRootFolders()
+        {
+            _ = SaveUtility.TryCreateFolder("Assets", "ScriptableObjects");
+            _ = SaveUtility.TryCreateFolder("Assets/ScriptableObjects", "Tiles");
         }
 
         private Tile BuildTile(Sprite sprite, string fullPath)
@@ -103,5 +126,6 @@ namespace Newt.RoomGeneration.Tiles
             AssetDatabase.CreateAsset(ruleset, fullPath);
             EditorUtility.SetDirty(ruleset);
         }
+        #endregion
     }
 }

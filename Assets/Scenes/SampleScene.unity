@@ -272,5 +272,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridParentTransform: {fileID: 1506567704}
   gridObjectPrefab: {fileID: 6465332594677169887, guid: 03a4f3d9a9ca91d47acfea028aa3f683, type: 3}
-  texture: {fileID: 2800000, guid: 97f0b7fb3cfe1054281a1572fb942496, type: 3}
-  tileRuleset: {fileID: 11400000, guid: 8a160bcf976c2b045866af7609bc5ebb, type: 2}
+  texture: {fileID: 2800000, guid: 06fbea32024eb2e418df8a4fdba8ac17, type: 3}
+  tileRuleset: {fileID: 11400000, guid: c09ad6b4c8e34e04d9c2ab3611c2c961, type: 2}

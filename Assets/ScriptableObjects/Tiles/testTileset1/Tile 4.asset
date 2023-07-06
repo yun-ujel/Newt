@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35dea3839b7c1d5469953f032c5a758d, type: 3}
+  m_Name: Tile 4
+  m_EditorClassIdentifier: 
+  adjacentTiles: 0000000101000000
+  ignoreCorners: 1
+  tileSprite: {fileID: -2736923848250081939, guid: 34c88fd9fb9a60f4fbc9e1bdd5cbeaa5, type: 3}
