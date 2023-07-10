@@ -16,8 +16,6 @@ namespace Newt.GridObjects
         private int y;
         #endregion
 
-        private Sprite sprite;
-
         public static GameObject GridObjectPrefab { get; set; }
         public static Transform GridParentTransform { get; set; }
 
@@ -33,6 +31,10 @@ namespace Newt.GridObjects
                 Color = color;
             }
         }
+
+        private Sprite sprite;
+
+        public bool IsEmpty { get; set; }
 
         public GridObject(Grid<GridObject> grid, int x, int y)
         {

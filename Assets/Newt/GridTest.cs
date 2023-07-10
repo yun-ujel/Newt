@@ -7,6 +7,8 @@ namespace Newt
 {
     using GridObjects;
     using RoomGeneration.Utilities;
+    using RoomGeneration.Tiles;
+    using UnityEngine.InputSystem;
 
     public class GridTest : MonoBehaviour
     {
@@ -18,6 +20,7 @@ namespace Newt
         [Space]
 
         [SerializeField] private Texture2D texture;
+        [SerializeField] private TileRuleset tileRuleset;
 
         private void Start()
         {
@@ -31,7 +34,7 @@ namespace Newt
 
             grid = new Grid<GridObject>(32, 32, 1, Vector2.one * -16, GridObject.create);
 
-            grid.GenerateRoom(texture);
+            grid.GenerateRoom(texture, tileRuleset);
         }
     }
 }
