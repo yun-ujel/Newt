@@ -165,7 +165,7 @@ namespace Grids
 
         public void TriggerGridObjectChanged(int x, int y)
         {
-            if (OnGridValueChanged != null) { OnGridValueChanged(this, new OnGridValueChangedEventArgs { x = x, y = y }); }
+            OnGridValueChanged?.Invoke(this, new OnGridValueChangedEventArgs { x = x, y = y });
         }
     }
 }

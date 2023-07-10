@@ -7,8 +7,6 @@ namespace Newt.GridObjects
 {
     public class GridObject
     {
-        public static System.Func<Grid<GridObject>, int, int, GridObject> create = (Grid<GridObject> g, int x, int y) => new GridObject(g, x, y);
-
         #region Grid Position
         private Grid<GridObject> grid;
 
@@ -16,47 +14,12 @@ namespace Newt.GridObjects
         private int y;
         #endregion
 
-        public static GameObject GridObjectPrefab { get; set; }
-        public static Transform GridParentTransform { get; set; }
-
-        public event System.EventHandler<OnUpdateVisualEventArgs> OnUpdateVisualEvent;
-        public class OnUpdateVisualEventArgs : System.EventArgs
-        {
-            public Sprite Sprite { get; private set; }
-            public Color Color { get; private set; }
-
-            public OnUpdateVisualEventArgs(Sprite sprite, Color color)
-            {
-                Sprite = sprite;
-                Color = color;
-            }
-        }
-
-        private Sprite sprite;
-
-        public bool IsEmpty { get; set; }
-
         public GridObject(Grid<GridObject> grid, int x, int y)
         {
             this.grid = grid;
 
             this.x = x;
             this.y = y;
-
-            if (GridObjectPrefab != null)
-            {
-                GameObject gameObject = Object.Instantiate(GridObjectPrefab, grid.GridToWorldPosition(x, y, false), Quaternion.identity, GridParentTransform);
-                gameObject.name = $"( {x}, {y} )";
-
-                gameObject.GetComponent<GridObjectBehaviour>().Initialize(this);
-            }
-        }
-
-        public void UpdateVisual(Color color, Sprite sprite = null)
-        {
-            if (sprite == null) { sprite = this.sprite; }
-            else { this.sprite = sprite; }
-            OnUpdateVisualEvent?.Invoke(this, new OnUpdateVisualEventArgs(sprite, color));
         }
     }
 }
