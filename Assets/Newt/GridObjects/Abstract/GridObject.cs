@@ -5,13 +5,13 @@ using Grids;
 
 namespace Newt.GridObjects
 {
-    public class GridObject
+    public abstract class GridObject
     {
         #region Grid Position
-        private Grid<GridObject> grid;
+        protected Grid<GridObject> grid;
 
-        private int x;
-        private int y;
+        protected int x;
+        protected int y;
         #endregion
 
         public GridObject(Grid<GridObject> grid, int x, int y)

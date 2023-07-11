@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9476172938fe51349bdd9075e4d8894e, type: 3}
+  m_Name: New Ground Generator
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 530389581369105476, guid: 3652c531c2cb8d94f88025059579b29b, type: 3}
+  tileset: {fileID: 11400000, guid: c09ad6b4c8e34e04d9c2ab3611c2c961, type: 2}
