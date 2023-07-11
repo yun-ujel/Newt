@@ -9,7 +9,7 @@ namespace Newt.RoomGeneration.ScriptableObjects
     {
         protected Transform transform;
 
-        public virtual void Initialize(Transform parent)
+        public virtual void Initialize(RoomGeneratorSO roomGenerator, Transform parent, Texture2D texture)
         {
             transform = parent;
         }

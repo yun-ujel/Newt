@@ -15,3 +15,5 @@ MonoBehaviour:
   generators:
   - <Color>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
     <Generator>k__BackingField: {fileID: 11400000, guid: f1d1a8df9e2d3e347b30ae4c472b001e, type: 2}
+  - <Color>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
+    <Generator>k__BackingField: {fileID: 11400000, guid: fc56aa2c06c555440af859d38a9f6726, type: 2}

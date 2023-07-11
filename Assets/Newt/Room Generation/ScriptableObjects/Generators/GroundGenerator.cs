@@ -18,13 +18,10 @@ namespace Newt.RoomGeneration.ScriptableObjects.Generators
         {
             GridObject gridObject = grid.GetObject(x, y);
 
-            if (!(gridObject is GroundGO))
+            if (gridObject is GroundGO ground)
             {
-                return;
+                ground.TriggerVisualChanged(this, new GroundGO.OnVisualChangedEventArgs(tileset.GetValidSprite(GetAdjacents(grid, x, y))));
             }
-
-            GroundGO ground = (GroundGO)gridObject;
-            ground.TriggerVisualChanged(this, new GroundGO.OnVisualChangedEventArgs(tileset.GetValidSprite(GetAdjacents(grid, x, y))));
         }
 
         public override GridObject CreateGridObject(Grid<GridObject> grid, int x, int y)

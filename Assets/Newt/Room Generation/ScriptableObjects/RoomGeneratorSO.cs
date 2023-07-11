@@ -10,6 +10,20 @@ namespace Newt.RoomGeneration.ScriptableObjects
     [CreateAssetMenu(fileName = "New Room Generator", menuName = "Scriptable Object/Generators/Room Generator")]
     public class RoomGeneratorSO : ScriptableObject
     {
+        public class OnGridBuiltEventArgs : System.EventArgs
+        {
+            public Grid<GridObject> Grid { get; private set; }
+
+            public OnGridBuiltEventArgs(Grid<GridObject> grid)
+            {
+                Grid = grid;
+            }
+        }
+
+        public event System.EventHandler<OnGridBuiltEventArgs> OnGridGeneratedEvent;
+        public event System.EventHandler<OnGridBuiltEventArgs> OnGridBuiltEvent;
+
+
         [System.Serializable]
         public class GridObjectDefinition
         {
@@ -25,7 +39,7 @@ namespace Newt.RoomGeneration.ScriptableObjects
 
             for (int i = 0; i < generators.Length; i++)
             {
-                generators[i].Generator.Initialize(roomParent.transform);
+                generators[i].Generator.Initialize(this, roomParent.transform, texture);
             }
 
             Grid<GridObject> grid = new Grid<GridObject>
@@ -37,16 +51,24 @@ namespace Newt.RoomGeneration.ScriptableObjects
                 (Grid<GridObject> g, int x, int y) => GenerateGridObject(g, x, y, texture)
             );
 
+            OnGridGeneratedEvent?.Invoke(this, new OnGridBuiltEventArgs(grid));
+
             for (int x = 0; x < grid.Width; x++)
             {
                 for (int y = 0; y < grid.Height; y++)
                 {
                     for (int i = 0; i < generators.Length; i++)
                     {
-                        generators[i].Generator.BuildGridObject(grid, x, y);
+                        if (generators[i].Color == texture.GetPixel(x, y))
+                        {
+                            generators[i].Generator.BuildGridObject(grid, x, y);
+                        }
                     }
+
                 }
             }
+
+            OnGridBuiltEvent?.Invoke(this, new OnGridBuiltEventArgs(grid));
         }
 
         public GridObject GenerateGridObject(Grid<GridObject> g, int x, int y, Texture2D texture)
