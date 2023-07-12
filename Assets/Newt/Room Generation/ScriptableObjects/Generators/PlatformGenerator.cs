@@ -98,12 +98,15 @@ namespace Newt.RoomGeneration.ScriptableObjects.Generators
 
         private void OnGridBuilt(object sender, RoomGeneratorSO.OnGridBuiltEventArgs args)
         {
-            for (int i = 0; i < gridsInfo[args.Grid].platforms.Count; i++)
+            if (gridsInfo.ContainsKey(args.Grid))
             {
-                InstantiatePlatform(gridsInfo[args.Grid].platforms[i], args.Grid);
-            }
+                for (int i = 0; i < gridsInfo[args.Grid].platforms.Count; i++)
+                {
+                    InstantiatePlatform(gridsInfo[args.Grid].platforms[i], args.Grid);
+                }
 
-            _ = gridsInfo.Remove(args.Grid);
+                _ = gridsInfo.Remove(args.Grid);
+            }
         }
         #endregion
 
