@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89b7f46ff5c3027429e2514a8beae47c, type: 3}
   m_Name: New Platform Generator
   m_EditorClassIdentifier: 
+  facing: 1
   platformPrefab: {fileID: 3817437354198766876, guid: daa4dabd48356074d986336e5aaa2da9, type: 3}
   visualPrefab: {fileID: 5908888048289155800, guid: b4e658f3c0bb7f44ca4054e801784c75, type: 3}
   sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
